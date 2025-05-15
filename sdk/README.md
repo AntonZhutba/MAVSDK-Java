@@ -1,6 +1,6 @@
 # MAVSDK-Java - SDK
 
-This project is the actual Java SDK that gets deployed on [Maven Central](https://search.maven.org/search?q=a:mavsdk). It works by connecting to a running instance of `mavsdk_server`, that can be downloaded from the [MAVSDK release artifacts](https://github.com/mavlink/MAVSDK/releases). By default, it connects on a `mavsdk_server` instance running locally (i.e. on 'localhost'), but it can connect on any machine over the network.
+This project is the actual Java SDK that gets deployed on [Maven Central](https://search.maven.org/search?q=a:mavsdk). It works by connecting to a running instance of `mavsdk_server`, that can be downloaded from the [MAVSDK release artifacts](https://github.com/AntonZhutba/MAVSDK/releases). By default, it connects on a `mavsdk_server` instance running locally (i.e. on 'localhost'), but it can connect on any machine over the network.
 
 ## Getting started
 

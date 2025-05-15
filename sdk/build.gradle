@@ -47,6 +47,9 @@ subprojects {
             grpc {
                 artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
             }
+            mavsdk {
+                path = "/Users/antonzhurba/Repo/MavLink/MAVSDK-Java/.venv/bin/protoc-gen-mavsdk"
+            }
         }
 
         generateProtoTasks {
@@ -107,12 +110,12 @@ subprojects {
                             name = 'MAVSDK-Java'
                             packaging = 'jar'
                             description = 'MAVSDK client for Java.'
-                            url = 'https://github.com/mavlink/MAVSDK-Java'
+                            url = 'https://github.com/AntonZhutba/MAVSDK-Java'
 
                             scm {
-                                connection = 'scm:git:https://github.com/mavlink/MAVSDK-Java'
-                                developerConnection = 'scm:git:https://github.com/mavlink/MAVSDK-Java'
-                                url = 'https://github.com/mavlink/MAVSDK-Java'
+                                connection = 'scm:git:https://github.com/AntonZhutba/MAVSDK-Java'
+                                developerConnection = 'scm:git:https://github.com/AntonZhutba/MAVSDK-Java'
+                                url = 'https://github.com/AntonZhutba/MAVSDK-Java'
                             }
 
                             licenses {

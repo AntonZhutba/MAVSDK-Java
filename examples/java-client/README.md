@@ -4,7 +4,7 @@ This project is meant to show examples using MAVSDK-Java, and is a good place to
 
 ## Prerequisites
 
-MAVSDK-Java will connect to a running instance of `mavsdk_server`, that can be downloaded from the [MAVSDK release page](https://github.com/mavlink/MAVSDK/releases).
+MAVSDK-Java will connect to a running instance of `mavsdk_server`, that can be downloaded from the [MAVSDK release page](https://github.com/AntonZhutba/MAVSDK/releases).
 
 The example runs `System drone = new System();`, which will by default connect to mavsdk_server on port 50051.
 

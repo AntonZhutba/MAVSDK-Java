@@ -1,6 +1,6 @@
 # MAVSDK-Java
 
-This is the Java frontend implementation to [MAVSDK](https://github.com/mavlink/MAVSDK).
+This is the Java frontend implementation to [MAVSDK](https://github.com/AntonZhutba/MAVSDK).
 
 It is organized as follows:
 
@@ -132,7 +132,7 @@ ossrhPassword=<password>
 
 Sometimes you just need to rebuild `mavsdk_server` or even `libmavsdk_server.so` a couple of times to directly debug a problem.
 
-This can be achieved with the Gradle [composite builds](https://docs.gradle.org/current/userguide/composite_builds.html). This is already setup in the Android example project [here](https://github.com/mavlink/MAVSDK-Java/blob/main/examples/android-client/settings.gradle#L3-L11) (just uncomment the lines to build `sdk` and/or `mavsdk_server` from sources).
+This can be achieved with the Gradle [composite builds](https://docs.gradle.org/current/userguide/composite_builds.html). This is already setup in the Android example project [here](https://github.com/AntonZhutba/MAVSDK-Java/blob/main/examples/android-client/settings.gradle#L3-L11) (just uncomment the lines to build `sdk` and/or `mavsdk_server` from sources).
 
 
 Then you can just build the example and it will in turn build `mavsdk_server`.
@@ -147,6 +147,6 @@ tools/generate_mavlink_headers.sh
 ./dockcross-android-arm64 cmake --build build/android-arm64 --target install && cp build/android-arm64/install/lib/libmavsdk_server.so ../mavsdk-android-test/mavsdk_server/src/main/prebuiltLibs/arm64-v8a/libmavsdk_server.so
 ```
 
-To avoid keep getting the file overwritten, comment out the [function downloading and extracting the .so library artifacts](https://github.com/mavlink/MAVSDK-Java/blob/85a2f3d5f96d67c1919f52c67f5f6bdbc7607486/mavsdk_server/build.gradle#L24-L53).
+To avoid keep getting the file overwritten, comment out the [function downloading and extracting the .so library artifacts](https://github.com/AntonZhutba/MAVSDK-Java/blob/85a2f3d5f96d67c1919f52c67f5f6bdbc7607486/mavsdk_server/build.gradle#L24-L53).
 
 Now build, install, run the Android app again.

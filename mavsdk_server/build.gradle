@@ -27,7 +27,7 @@ allprojects {
         def extractForArch = { arch ->
             def archiveName = "mavsdk_server_android-" + arch + "_" + mavsdk_server_release + ".tar"
             def archiveFile = new File(project.buildDir.getAbsolutePath() + "/tmp/" + archiveName)
-            def archiveUrl = "https://github.com/mavlink/MAVSDK/releases/download/" + mavsdk_server_release + "/mavsdk_server_android-" + arch + ".tar"
+            def archiveUrl = "https://github.com/AntonZhutba/MAVSDK/releases/download/" + mavsdk_server_release + "/mavsdk_server_android-" + arch + ".tar"
             def destDir = project.projectDir.getAbsolutePath() + "/src/main/prebuiltLibs"
 
             if (!archiveFile.exists()) {
@@ -64,12 +64,12 @@ allprojects {
                             name = 'MAVSDK-Server'
                             packaging = 'aar'
                             description = 'MAVSDK server for Android.'
-                            url = 'https://github.com/mavlink/MAVSDK-Java'
+                            url = 'https://github.com/AntonZhutba/MAVSDK-Java'
 
                             scm {
-                                connection = 'scm:git:https://github.com/mavlink/MAVSDK-Java'
-                                developerConnection = 'scm:git:https://github.com/mavlink/MAVSDK-Java'
-                                url = 'https://github.com/mavlink/MAVSDK-Java'
+                                connection = 'scm:git:https://github.com/AntonZhutba/MAVSDK-Java'
+                                developerConnection = 'scm:git:https://github.com/AntonZhutba/MAVSDK-Java'
+                                url = 'https://github.com/AntonZhutba/MAVSDK-Java'
                             }
 
                             licenses {

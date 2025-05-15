@@ -8,7 +8,7 @@ public class MavsdkTest {
   @Test
   public void testStream() throws InterruptedException {
     System system = new System();
-    system.getTelemetry().getPosition()
+    system.getTelemetry().getPositionStream()
           .doOnNext(next -> java.lang.System.out.println(next))
           .test()
           .await(5, TimeUnit.SECONDS);

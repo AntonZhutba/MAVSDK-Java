@@ -18,7 +18,7 @@ subprojects {
 
     group = 'io.mavsdk'
     archivesBaseName = 'mavsdk'
-    version = '2.1.0'
+    version = file('VERSION').text.trim()
 
     repositories {
         jcenter()
@@ -46,9 +46,6 @@ subprojects {
         plugins {
             grpc {
                 artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
-            }
-            mavsdk {
-                path = "/Users/antonzhurba/Repo/MavLink/MAVSDK-Java/.venv/bin/protoc-gen-mavsdk"
             }
         }
 

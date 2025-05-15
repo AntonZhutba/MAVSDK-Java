@@ -10,3 +10,4 @@ gradle.properties
 
 .cxx
 venv
+bin

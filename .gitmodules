@@ -1,3 +1,4 @@
 [submodule "sdk/proto"]
 	path = sdk/proto
-	url = https://github.com/dronecore/DroneCore-Proto.git
+	url = https://github.com/AntonZhutba/MAVSDK-Proto.git
+	branch = feature/striker-plugin

@@ -9,6 +9,11 @@ buildscript {
     }
 }
 
+plugins {
+    id 'de.undercouch.download' version '4.1.2'
+}
+
+
 subprojects {
     apply plugin: 'com.google.protobuf'
     apply plugin: 'idea'
@@ -19,6 +24,33 @@ subprojects {
     group = 'io.mavsdk'
     archivesBaseName = 'mavsdk'
     version = file('VERSION').text.trim()
+
+
+    ext {
+        mavsdkServerVersion     = version
+        def os                  = org.gradle.internal.os.OperatingSystem.current()
+        def arch                = System.getProperty("os.arch").toLowerCase()
+        def assetName
+        if (os.isMacOsX()) {
+            assetName = (arch.contains('aarch')||arch.contains('arm'))
+                ? 'mavsdk_server_macos_arm64'
+                : 'mavsdk_server_macos_x64'
+        } else if (os.isLinux()) {
+            if (!arch.contains('arm')) {
+                assetName = 'mavsdk_server_musl_x86_64'
+            } else if (arch.contains('64')) {
+                assetName = 'mavsdk_server_linux-arm64-musl'
+            } else if (arch.contains('armv7')) {
+                assetName = 'mavsdk_server_linux-armv7l-musl'
+            } else {
+                assetName = 'mavsdk_server_linux-armv6-musl'
+            }
+        } else {
+            throw new GradleException("Unsupported OS for mavsdk_server: $os")
+        }
+        mavsdkServerAsset       = assetName
+        mavsdkServerDownloadUrl = "https://github.com/AntonZhutba/MAVSDK/releases/download/v${mavsdkServerVersion}/${mavsdkServerAsset}"
+    }
 
     repositories {
         jcenter()
@@ -93,6 +125,27 @@ subprojects {
         withJavadocJar()
         withSourcesJar()
     }
+
+    tasks.register('downloadMavsdkServer', Download) {
+        src  mavsdkServerDownloadUrl
+        dest layout.buildDirectory.file("tmp/${mavsdkServerAsset}")
+        onlyIfModified true
+    }
+    tasks.register('copyMavsdkServer', Copy) {
+        dependsOn 'downloadMavsdkServer'
+        from     layout.buildDirectory.file("tmp/${mavsdkServerAsset}")
+        into     layout.buildDirectory.dir("resources/main")
+        fileMode = 0755
+    }
+    tasks.named('processResources') {
+        dependsOn 'copyMavsdkServer'
+    }
+    sourceSets.main.resources.srcDir layout.buildDirectory.dir("resources/main")
+    
+    tasks.named('sourcesJar') {
+        dependsOn 'processResources', 'copyMavsdkServer'
+    }
+
 
     if (project.hasProperty('ossrhUsername')
         && project.hasProperty('ossrhPassword')) {

@@ -11,6 +11,11 @@ buildscript {
 
 plugins {
     id 'de.undercouch.download' version '4.1.2'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+    id 'com.google.protobuf' version '0.9.4'
 }
 
 
@@ -20,6 +25,7 @@ subprojects {
     apply plugin: 'java-library'
     apply plugin: 'maven-publish'
     apply plugin: 'signing'
+    apply plugin: 'com.github.johnrengelman.shadow'
 
     group = 'io.mavsdk'
     archivesBaseName = 'mavsdk'
@@ -65,8 +71,8 @@ subprojects {
         checkstyleClasspath 'com.puppycrawl.tools:checkstyle:8.17'
     }
 
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
     def grpcVersion = '1.61.1'
 
@@ -131,16 +137,33 @@ subprojects {
         dest layout.buildDirectory.file("tmp/${mavsdkServerAsset}")
         onlyIfModified true
     }
+    
+    def serverBinaryPath = "mavsdk_bin/${mavsdkServerAsset}"
+
     tasks.register('copyMavsdkServer', Copy) {
         dependsOn 'downloadMavsdkServer'
-        from     layout.buildDirectory.file("tmp/${mavsdkServerAsset}")
-        into     layout.buildDirectory.dir("resources/main")
+
+        def srcFile = file("${project.buildDir}/tmp/${mavsdkServerAsset}")
+        def destDir = file("${project.projectDir}/src/main/resources/mavsdk_bin")
+
+        doFirst {
+            println "📦 Copying ${srcFile} to ${destDir}"
+            destDir.mkdirs()
+        }
+
+        from srcFile
+        into destDir
+        rename { mavsdkServerAsset }
         fileMode = 0755
     }
+
     tasks.named('processResources') {
         dependsOn 'copyMavsdkServer'
     }
-    sourceSets.main.resources.srcDir layout.buildDirectory.dir("resources/main")
+
+    tasks.named('jar') {
+        dependsOn 'copyMavsdkServer'
+    }
     
     tasks.named('sourcesJar') {
         dependsOn 'processResources', 'copyMavsdkServer'
@@ -228,5 +251,11 @@ subprojects {
         testImplementation "io.grpc:grpc-testing:${grpcVersion}"
         testImplementation 'junit:junit:4.12'
         testImplementation 'org.mockito:mockito-core:2.13.0'
+    }
+    tasks.named('build') {
+        dependsOn 'shadowJar'
+    }
+    artifacts {
+        archives shadowJar
     }
 }

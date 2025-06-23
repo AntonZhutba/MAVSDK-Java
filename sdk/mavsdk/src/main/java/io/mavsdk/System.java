@@ -27,6 +27,7 @@ import io.mavsdk.telemetry.Telemetry;
 import io.mavsdk.telemetry_server.TelemetryServer;
 import io.mavsdk.transponder.Transponder;
 import io.mavsdk.tune.Tune;
+import io.mavsdk.striker.Striker;
 import io.reactivex.annotations.NonNull;
 
 public class System {
@@ -57,6 +58,7 @@ public class System {
   private final LazyPlugin<TelemetryServer> telemetryServer;
   private final LazyPlugin<Transponder> transponder;
   private final LazyPlugin<Tune> tune;
+  private final LazyPlugin<Striker> striker;
 
   /**
    * Create a System object. The plugins are initialized lazily, when the corresponding
@@ -102,6 +104,7 @@ public class System {
     telemetryServer = LazyPlugin.from(() -> new TelemetryServer(host, port));
     transponder = LazyPlugin.from(() -> new Transponder(host, port));
     tune = LazyPlugin.from(() -> new Tune(host, port));
+    striker = LazyPlugin.from(() -> new Striker(host, port));
   }
 
   @NonNull
@@ -235,6 +238,11 @@ public class System {
     return tune.get();
   }
 
+  @NonNull
+  public Striker getStriker() {
+    return striker.get();
+  }
+
   /**
    * Dispose of all the plugins.
    */
@@ -265,5 +273,6 @@ public class System {
     telemetryServer.dispose();
     transponder.dispose();
     tune.dispose();
+    striker.dispose();
   }
 }

@@ -11,3 +11,5 @@ gradle.properties
 .cxx
 venv
 bin
+.venv
+**/mavsdk_bin/*

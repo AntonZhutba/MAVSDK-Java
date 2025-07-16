@@ -91,13 +91,13 @@ subprojects {
             all()*.each { task ->
                 task.builtins {
                     java {
-                        option "lite"
+                        // option "lite"
                     }
                 }
 
                 task.plugins {
                     grpc {
-                        option 'lite'
+                        // option 'lite'
                     }
 
                     mavsdk {
@@ -116,7 +116,8 @@ subprojects {
             }
 
             java {
-                srcDir 'build/generated/source/proto/main/javalite'
+                // srcDir 'build/generated/source/proto/main/javalite'
+                srcDir 'build/generated/source/proto/main/java'
                 srcDir 'build/generated/source/proto/main/grpc'
                 srcDir 'build/generated/source/proto/main/mavsdk'
             }
@@ -240,8 +241,10 @@ subprojects {
         // protos which would create conflicts with other libraries that use them as well
         compileOnly "io.grpc:grpc-protobuf:${grpcVersion}"
 
+        implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+        implementation "com.google.protobuf:protobuf-java:3.25.2"
         implementation "io.grpc:grpc-okhttp:${grpcVersion}"
-        implementation "io.grpc:grpc-protobuf-lite:${grpcVersion}"
+        // implementation "io.grpc:grpc-protobuf-lite:${grpcVersion}"
         implementation "io.grpc:grpc-stub:${grpcVersion}"
         implementation 'org.slf4j:slf4j-api:2.0.12'
         api 'io.reactivex.rxjava2:rxjava:2.2.21'
